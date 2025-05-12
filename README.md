@@ -4,5 +4,5 @@ Very Simple C++ Pad is a very simple C++ playground that allows you to quickly c
 
 It is extremely simple and does not support editing features; you can use other editors such as VSCode for editing.
 
-![preview](Assets/preview.png)
+![preview](VerySimpleCppPad/Assets/preview.png)
 

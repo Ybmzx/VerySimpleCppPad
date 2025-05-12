@@ -1,0 +1,90 @@
+﻿<Window x:Class="VerySimpleCppPad.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:hu="clr-namespace:HotkeyUtility.Controls;assembly=HotkeyUtility"
+        xmlns:local="clr-namespace:VerySimpleCppPad"
+        d:DataContext="{d:DesignInstance local:MainWindow,
+                                         IsDesignTimeCreatable=False}"
+        mc:Ignorable="d"
+        Topmost="{Binding ElementName=TopmostCheckBox, Path=IsChecked}"
+        Title="Very Simple C++ Pad" Height="600" Width="450">
+    <Window.InputBindings>
+        <hu:HotkeyBinding Combination="CTRL+ALT+SHIFT+B"
+                          Command="{Binding ViewModel.RunProgramCommand}"/>
+    </Window.InputBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <DockPanel DockPanel.Dock="Top" Margin="5">
+                <TextBlock Text="Compiler: "/>
+                <TextBox Text="{Binding ViewModel.CompilerPath}"/>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Top" Margin="5">
+                <TextBlock Text="Editor: "/>
+                <TextBox Text="{Binding ViewModel.EditorPath}"></TextBox>
+            </DockPanel>
+            <DockPanel DockPanel.Dock="Top" Margin="5">
+                <TextBlock Text="Font: "/>
+                <TextBox Text="{Binding ViewModel.Font}"></TextBox>
+            </DockPanel>
+        </DockPanel>
+        <DockPanel LastChildFill="False"  Grid.Row="2">
+            <TextBlock Margin="5" DockPanel.Dock="Left">Current: <Run Text="{Binding ViewModel.CurrentProgramFile}"/></TextBlock>
+            <TextBlock Name="DragButton"
+                       Foreground="Blue"
+                       Cursor="Hand"
+                       Margin="5"
+                       TextDecorations="Underline"
+                       DockPanel.Dock="Right"
+                       MouseDown="Drag_MouseDown">
+                Drag
+            </TextBlock>
+            <Button Margin="5" DockPanel.Dock="Right" Command="{Binding ViewModel.OpenInEditorCommand}">Open In Editor</Button>
+            <Button Margin="5" DockPanel.Dock="Right" Command="{Binding ViewModel.OpenTemplateCommand}">Open Template</Button>
+            <CheckBox Margin="5" Name="TopmostCheckBox" DockPanel.Dock="Right" VerticalAlignment="Center" IsChecked="True">Topmost</CheckBox>
+        </DockPanel>
+        <ListBox Grid.Row="3" Margin="10" d:ItemsSource="{d:SampleData ItemCount=5}" ItemsSource="{Binding ViewModel.ProgramFiles}" SelectedItem="{Binding ViewModel.SelectedProgramFile}"></ListBox>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Margin="5" Command="{Binding ViewModel.OpenCurrentFileCommand}">Open</Button>
+            <Button Margin="5" Command="{Binding ViewModel.CreateNewFileCommand}" Grid.Column="1">New And Open</Button>
+        </Grid>
+        <DockPanel Margin="5" Grid.Row="5">
+            <Grid DockPanel.Dock="Bottom">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Button Margin="5" Command="{Binding ViewModel.RunProgramCommand}">Run (CTRL+ALT+SHIFT+B)</Button>
+                <Button Margin="5" Command="{Binding ViewModel.StopProgramCommand}" Grid.Row="1">Stop</Button>
+            </Grid>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="2*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top">Input:</TextBlock>
+                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" FontFamily="{Binding ViewModel.Font, Mode=OneWay}" Text="{Binding ViewModel.InputContent, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                </DockPanel>
+                <DockPanel Grid.Row="1">
+                    <TextBlock DockPanel.Dock="Top">Output:</TextBlock>
+                    <TextBox TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True" FontFamily="{Binding ViewModel.Font, Mode=OneWay}" Text="{Binding ViewModel.OutputContent}"/>
+                </DockPanel>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>

@@ -114,5 +114,10 @@ namespace VerySimpleCppPad.Services
                 cts = null;
             }
         }
+
+        public bool IsRunning()
+        {
+            return cts is not null;
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace VerySimpleCppPad.Services
     {
         Task<CompileAndRunResult> CompileAndRunAsync(string fileName, string stdin, string outfileName, string compiler);
         void StopRunningProcess();
+        bool IsRunning();
     }
 }

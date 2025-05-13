@@ -110,6 +110,8 @@ namespace VerySimpleCppPad.ViewModels
         [RelayCommand]
         async Task RunProgramAsync()
         {
+            if (cppCompileAndRunService.IsRunning()) return;
+
             if (CurrentProgramFile is null)
             {
                 messageBoxService.Show("You should open a file first.", "Message");
